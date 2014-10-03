@@ -1,13 +1,13 @@
 PROG=solve
 CXX=g++
-CFLAGS=-O2
+CFLAGS=-g
 LDFLAGS=
 
-$(PROG): main.o
+$(PROG): matrix.o box.o main.o
 	$(CXX) $(CFLAGS) $^ -o $(PROG) $(LDFLAGS)
 
 %.o: %.cpp
 	$(CXX) $(CFLAGS) -c $?
 
 clean: 
-	rm *.o $(PROG)
+	rm -f *.o $(PROG)
