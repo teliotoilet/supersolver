@@ -6,8 +6,8 @@
 class Box2d
 {
 private:
-    const int _nx, _ny;
-    const double _ds;
+    int _nx, _ny;
+    double _ds;
     Matrix* _p;
     Matrix* _u;
     Matrix* _v;

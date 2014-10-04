@@ -19,6 +19,12 @@ public:
 
     Matrix& operator= (const Matrix &m);
     Matrix& operator= (const double d);
+    Matrix& operator+= (const Matrix &m);
+    Matrix& operator+= (const double d);
+    Matrix& operator-= (const Matrix &m);
+    Matrix& operator-= (const double d);
+    Matrix& operator*= (const Matrix &m);
+    Matrix& operator*= (const double d);
 
     friend Matrix operator+ (const Matrix &a1, const Matrix &a2);
     friend Matrix operator+ (const Matrix &m, const double d);

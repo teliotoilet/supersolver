@@ -142,6 +142,72 @@ Matrix operator+(const double d, const Matrix &m)
     }
     return A;
 }
+Matrix& Matrix::operator+=(const Matrix &m)
+{
+    for(int i=0; i < _ni; ++i) {
+        for(int j=0; j < _nj; ++j) {
+            for(int k=0; k < _nk; ++k) {
+                _A[i][j][k] += m._A[i][j][k];
+            }
+        }
+    }
+    return *this;
+}
+Matrix& Matrix::operator+=(const double d)
+{
+    for(int i=0; i < _ni; ++i) {
+        for(int j=0; j < _nj; ++j) {
+            for(int k=0; k < _nk; ++k) {
+                _A[i][j][k] += d;
+            }
+        }
+    }
+    return *this;
+}
+Matrix& Matrix::operator-=(const Matrix &m)
+{
+    for(int i=0; i < _ni; ++i) {
+        for(int j=0; j < _nj; ++j) {
+            for(int k=0; k < _nk; ++k) {
+                _A[i][j][k] -= m._A[i][j][k];
+            }
+        }
+    }
+    return *this;
+}
+Matrix& Matrix::operator-=(const double d)
+{
+    for(int i=0; i < _ni; ++i) {
+        for(int j=0; j < _nj; ++j) {
+            for(int k=0; k < _nk; ++k) {
+                _A[i][j][k] -= d;
+            }
+        }
+    }
+    return *this;
+}
+Matrix& Matrix::operator*=(const Matrix &m)
+{
+    for(int i=0; i < _ni; ++i) {
+        for(int j=0; j < _nj; ++j) {
+            for(int k=0; k < _nk; ++k) {
+                _A[i][j][k] *= m._A[i][j][k];
+            }
+        }
+    }
+    return *this;
+}
+Matrix& Matrix::operator*=(const double d)
+{
+    for(int i=0; i < _ni; ++i) {
+        for(int j=0; j < _nj; ++j) {
+            for(int k=0; k < _nk; ++k) {
+                _A[i][j][k] *= d;
+            }
+        }
+    }
+    return *this;
+}
 
 
 Matrix operator-(const Matrix &a1, const Matrix &a2)
