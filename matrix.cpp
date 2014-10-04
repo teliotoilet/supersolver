@@ -13,6 +13,7 @@ Matrix::Matrix(int ni, int nj, int nk)
             _A[i][j] = new double[_nk];
         }
     }
+    _idx = 0;
     if(verbose) std::cout << "Constructed matrix with dimensions (" 
         << ni << "," << nj << "," << nk << ")\n";
 }
@@ -29,6 +30,34 @@ Matrix::Matrix(int ni, int nj, int nk)
 //    if(verbose) std::cout << "Copied matrix with dimensions (" 
 //        << m._ni << "," << m._nj << "," << m._nk << ")\n";
 //}
+Matrix::Matrix(int ni, double init[])
+    : _ni(ni), _nj(1), _nk(1)
+{
+    _A = new double**[_ni];
+    int idx = 0;
+    for(int i=0; i < _ni; ++i) {
+        _A[i] = new double*[_nj];
+        _A[i][0] = new double[_nk];
+        _A[i][0][0] = init[idx++];
+    }
+    if(verbose) std::cout << "Constructed/initialized 1D matrix with length " 
+        << ni << ")\n";
+}
+Matrix::Matrix(int ni, int nj, double init[])
+    : _ni(ni), _nj(nj), _nk(1)
+{
+    _A = new double**[_ni];
+    int idx = 0;
+    for(int i=0; i < _ni; ++i) {
+        _A[i] = new double*[_nj];
+        for(int j=0; j < _nj; ++j) {
+            _A[i][j] = new double[_nk];
+            _A[i][j][0] = init[idx++];
+        }
+    }
+    if(verbose) std::cout << "Constructed/initialized 2D matrix with dimensions (" 
+        << ni << "," << nj  << ")\n";
+}
 Matrix::~Matrix()
 {
     if(_ni > 0) {
@@ -47,27 +76,38 @@ Matrix::~Matrix()
 std::ostream& operator<< (std::ostream &out, Matrix &m)
 {
     out << "[";
-    for(int k=0; k < m._nk; ++k) {
-
-        if(k==0) out << "[";
+    for(int i=0; i < m._ni; ++i) {
+        if(i==0) out << "[";
         else out << ",";
-        for(int j=0; j < m._nj; ++j) {
 
+        for(int j=0; j < m._nj; ++j) {
             if(j==0) out << "[";
             else out << ",";
-            for(int i=0; i < m._ni; ++i) {
 
-                if(i==0) out << "[";
+            for(int k=0; k < m._nk; ++k) {
+                if(k==0) out << "[";
                 else out << ",";
 
                 out << m._A[i][j][k];
 
             }
-            out << "]";
+            out << "]\n";
         }
         out << "]";
     }
     out << "]";
+}
+
+double Matrix::sum() {
+    double d=0.0;
+    for(int i=0; i < _ni; ++i) {
+        for(int j=0; j < _nj; ++j) {
+            for(int k=0; k < _nk; ++k) {
+                d += _A[i][j][k];
+            }
+        }
+    }
+    return d;
 }
 
 Matrix& Matrix::operator= (const Matrix &m)
@@ -95,6 +135,17 @@ Matrix& Matrix::operator= (const double d)
     return *this;
 }
 
+double& Matrix::operator() (const int i)
+{
+    assert(i >= 0 && i < _ni);
+    return _A[i][0][0];
+}
+double& Matrix::operator() (const int i, const int j)
+{
+    assert(i >= 0 && i < _ni);
+    assert(j >= 0 && j < _nj);
+    return _A[i][j][0];
+}
 double& Matrix::operator() (const int i, const int j, const int k)
 {
     assert(i >= 0 && i < _ni);
