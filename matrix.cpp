@@ -1,7 +1,9 @@
 #include "main.h"
 #include "matrix.h"
 
+#ifdef DEBUG
 #include <cassert>
+#endif
 
 Matrix::Matrix(int ni, int nj, int nk)
     : _ni(ni), _nj(nj), _nk(nk)
@@ -137,28 +139,39 @@ Matrix& Matrix::operator= (const double d)
 
 double& Matrix::operator() (const int i)
 {
+#ifdef DEBUG
     assert(i >= 0 && i < _ni);
+#endif
     return _A[i][0][0];
 }
 double& Matrix::operator() (const int i, const int j)
 {
+#ifdef DEBUG
     assert(i >= 0 && i < _ni);
     assert(j >= 0 && j < _nj);
+#endif
     return _A[i][j][0];
 }
 double& Matrix::operator() (const int i, const int j, const int k)
 {
+#ifdef DEBUG
     assert(i >= 0 && i < _ni);
     assert(j >= 0 && j < _nj);
     assert(k >= 0 && k < _nk);
+#endif
     return _A[i][j][k];
 }
 
 Matrix operator+(const Matrix &a1, const Matrix &a2)
 {
-    int ni = a1._ni; assert(a1._ni==a2._ni);
-    int nj = a1._nj; assert(a1._nj==a2._nj);
-    int nk = a1._nk; assert(a1._nk==a2._nk);
+#ifdef DEBUG
+    assert(a1._ni==a2._ni);
+    assert(a1._nj==a2._nj);
+    assert(a1._nk==a2._nk);
+#endif
+    int ni = a1._ni;
+    int nj = a1._nj;
+    int nk = a1._nk;
     Matrix A = Matrix(ni,nj,nk);
     for(int i=0; i < ni; ++i) {
         for(int j=0; j < nj; ++j) {
@@ -263,9 +276,14 @@ Matrix& Matrix::operator*=(const double d)
 
 Matrix operator-(const Matrix &a1, const Matrix &a2)
 {
-    int ni = a1._ni; assert(a1._ni==a2._ni);
-    int nj = a1._nj; assert(a1._nj==a2._nj);
-    int nk = a1._nk; assert(a1._nk==a2._nk);
+#ifdef DEBUG
+    assert(a1._ni==a2._ni);
+    assert(a1._nj==a2._nj);
+    assert(a1._nk==a2._nk);
+#endif
+    int ni = a1._ni;
+    int nj = a1._nj;
+    int nk = a1._nk;
     Matrix A = Matrix(ni,nj,nk);
     for(int i=0; i < ni; ++i) {
         for(int j=0; j < nj; ++j) {
@@ -303,9 +321,14 @@ Matrix operator-(const double d, const Matrix &m)
 
 Matrix operator*(const Matrix &a1, const Matrix &a2)
 {
-    int ni = a1._ni; assert(a1._ni==a2._ni);
-    int nj = a1._nj; assert(a1._nj==a2._nj);
-    int nk = a1._nk; assert(a1._nk==a2._nk);
+#ifdef DEBUG
+    assert(a1._ni==a2._ni);
+    assert(a1._nj==a2._nj);
+    assert(a1._nk==a2._nk);
+#endif
+    int ni = a1._ni;
+    int nj = a1._nj;
+    int nk = a1._nk;
     Matrix A = Matrix(ni,nj,nk);
     for(int i=0; i < ni; ++i) {
         for(int j=0; j < nj; ++j) {
@@ -343,9 +366,14 @@ Matrix operator*(const double d, const Matrix &m)
 
 Matrix operator/(const Matrix &a1, const Matrix &a2)
 {
-    int ni = a1._ni; assert(a1._ni==a2._ni);
-    int nj = a1._nj; assert(a1._nj==a2._nj);
-    int nk = a1._nk; assert(a1._nk==a2._nk);
+#ifdef DEBUG
+    assert(a1._ni==a2._ni);
+    assert(a1._nj==a2._nj);
+    assert(a1._nk==a2._nk);
+#endif
+    int ni = a1._ni;
+    int nj = a1._nj;
+    int nk = a1._nk;
     Matrix A = Matrix(ni,nj,nk);
     for(int i=0; i < ni; ++i) {
         for(int j=0; j < nj; ++j) {

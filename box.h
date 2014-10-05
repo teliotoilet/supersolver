@@ -11,9 +11,18 @@ private:
     Matrix* _p;
     Matrix* _u;
     Matrix* _v;
+    Matrix* _F;
+    Matrix* _G;
+
+    double _pinf, _uinf, _vinf;
+
+    void calcXFlux();
+    void calcYFlux();
+    void calcXJac();
+    void calcYJac();
 
 public:
-    Box2d(int nx, int ny, double ds=0.1);
+    Box2d(int nx, int ny, double ds=0.1); // nx,ny are cell counts
     ~Box2d();
 
     int Nx() const { return _nx; }
@@ -24,7 +33,12 @@ public:
     Matrix& u() { return *_u; }
     Matrix& v() { return *_v; }
 
+    void setFreestream(double p0, double u0, double v0);
     void init(double p0, double u0, double v0);
+    void initFS();
+
+    void updateConvectiveFlux();
+    void enforceConvectiveBCs();
 
 };
 
