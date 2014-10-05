@@ -10,9 +10,13 @@ int main()
                       0,  3, -1,  8};
     double rhs[] = { 6, 25, -11, 15};
     double guess[] = { 0, 0, 0, 0 };
-    Matrix A = Matrix(4,4,lhs);
-    Matrix b = Matrix(4,rhs);
-    Matrix x = Matrix(4,guess);
+    //Matrix A = Matrix(4,4,lhs);
+    //Matrix b = Matrix(4,rhs);
+    //Matrix x = Matrix(4,guess);
+    Matrix A = Matrix(4,4); A = lhs;
+    Matrix b = Matrix(4); b = rhs;
+    Matrix x = Matrix(4); x = guess;
+    Matrix resid = Matrix(4);
 
 
     // solver iterations
@@ -28,7 +32,8 @@ int main()
             }
             x(i) = (b(i)-s)/A(i,i);
         }
-        R = calcResid(x,A,b);
+        resid = b;
+        R = calcResid(x,A,resid);
         std::cout << "iter " << n
             << ": x= " 
             << x(0) << " "
